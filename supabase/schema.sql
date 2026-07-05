@@ -1,7 +1,7 @@
--- ============================================================
+-- ==============================================================
 -- Pesquisa Eleitoral - Schema Supabase (PostgreSQL)
 -- Rode no SQL Editor do Supabase.
--- ============================================================
+-- ==============================================================
 
 -- Extensao para gen_random_uuid() (geralmente ja vem habilitada)
 create extension if not exists "pgcrypto";
