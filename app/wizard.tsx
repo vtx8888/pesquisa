@@ -425,10 +425,21 @@ function OptionCard({
   multi?: boolean;
   onClick: () => void;
 }) {
-  const [imgErro, setImgErro] = useState(false);
-  // Usa /public/candidatos/<id>.jpg se existir; senao cai no icone.
-  const foto = candidato.foto ?? `/candidatos/${candidato.id}.jpg`;
-  const mostraFoto = temAvatar && !imgErro;
+  // Tenta /public/candidatos/<id>.<ext> em varios formatos; cai no icone se
+  // nenhum existir. Se `foto` estiver definido no candidato, usa ele direto.
+  const EXTS = [".png", ".jpg", ".jpeg", ".webp"];
+  const [extIdx, setExtIdx] = useState(0);
+  const [semFoto, setSemFoto] = useState(false);
+  const foto = candidato.foto ?? `/candidatos/${candidato.id}${EXTS[extIdx]}`;
+  const mostraFoto = temAvatar && !semFoto;
+
+  const aoFalharImg = () => {
+    if (candidato.foto || extIdx >= EXTS.length - 1) {
+      setSemFoto(true);
+    } else {
+      setExtIdx((i) => i + 1);
+    }
+  };
 
   return (
     <button
@@ -468,7 +479,7 @@ function OptionCard({
               src={foto}
               alt={candidato.nome}
               className="h-full w-full object-cover"
-              onError={() => setImgErro(true)}
+              onError={aoFalharImg}
             />
           ) : (
             <Icon name="person" className="text-on-surface-variant" fill />
