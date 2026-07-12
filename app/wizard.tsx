@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Turnstile } from "@marsidev/react-turnstile";
@@ -470,15 +471,17 @@ function OptionCard({
         />
       </span>
 
-      {/* Avatar (somente candidatos): foto se existir, senao icone */}
+      {/* Avatar (somente candidatos): foto se existir, senao icone.
+          next/image redimensiona pra 56px + WebP (o PNG original vira poucos KB). */}
       {temAvatar && (
-        <span className="mr-4 flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface-container-low">
+        <span className="relative mr-4 flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-surface-container-low">
           {mostraFoto ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={foto}
               alt={candidato.nome}
-              className="h-full w-full object-cover"
+              fill
+              sizes="56px"
+              className="object-cover"
               onError={aoFalharImg}
             />
           ) : (
