@@ -63,9 +63,6 @@ export function Wizard({
     defaultValues: {
       faixa_etaria: "",
       genero: "",
-      senador_vaga_1: "",
-      senador_vaga_2: "",
-      governador: "",
       presidente: "",
       temas_melhorar: [],
       turnstileToken: "",
@@ -97,7 +94,7 @@ export function Wizard({
     };
   }, [setValue]);
 
-  // Ao trocar de passo/fase, volta pro topo (a tela do Senador e longa).
+  // Ao trocar de passo/fase, volta pro topo (a tela de temas e longa).
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [stepIndex, fase]);
@@ -113,13 +110,7 @@ export function Wizard({
       : [];
   const podeConfirmar = selecionados.length > 0;
 
-  // Esconde o candidato ja escolhido na vaga anterior (senador).
-  const candidatos = step?.candidatos.filter((c) => {
-    if (!step.excluiEscolhaDe) return true;
-    // Branco/Nulo e Indeciso podem repetir nas duas vagas.
-    if (c.id === "branco_nulo" || c.id === "indeciso") return true;
-    return c.id !== values[step.excluiEscolhaDe];
-  });
+  const candidatos = step?.candidatos;
 
   function selecionar(candidatoId: string) {
     if (!step) return;
@@ -235,7 +226,7 @@ export function Wizard({
         <p className="text-xs leading-relaxed text-outline">
           Ao iniciar, você concorda com a coleta de dados de acesso (como IP e
           localização aproximada) para fins estatísticos e de prevenção a
-          fraudes. Nenhum voto é vinculado à sua identidade. Saiba mais na{" "}
+          fraudes. Nenhuma resposta é vinculada à sua identidade. Saiba mais na{" "}
           <a
             href="/privacidade"
             target="_blank"
@@ -254,7 +245,7 @@ export function Wizard({
       <CenteredShell>
         <Spinner />
         <p className="font-medium text-on-surface-variant">
-          Computando seu voto com segurança...
+          Registrando sua resposta com segurança...
         </p>
       </CenteredShell>
     );
@@ -268,7 +259,7 @@ export function Wizard({
         </div>
         <h2 className="text-2xl font-bold text-primary">Você já participou</h2>
         <p className="mx-auto max-w-md text-lg text-secondary">
-          Identificamos um voto registrado neste dispositivo. Cada pessoa pode
+          Identificamos uma resposta registrada neste dispositivo. Cada pessoa pode
           responder à pesquisa apenas uma vez.
         </p>
       </CenteredShell>
@@ -545,7 +536,7 @@ function LeadStep({ votoId }: { votoId: string | null }) {
         <Icon name="check_circle" className="text-[36px] text-green-600" fill />
       </div>
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-primary">Seu voto foi computado!</h2>
+        <h2 className="text-2xl font-bold text-primary">Sua resposta foi registrada!</h2>
         <p className="text-lg text-secondary">Obrigado por participar da pesquisa.</p>
       </div>
 

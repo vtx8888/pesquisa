@@ -5,7 +5,7 @@ import "./globals.css";
 const GTM_ID = "GTM-T6CHQGKG";
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_POLL_TITLE ?? "Pesquisa Eleitoral",
+  title: process.env.NEXT_PUBLIC_POLL_TITLE ?? "Pesquisa de Opinião",
   description: "Participe da pesquisa. Leva menos de 1 minuto.",
   robots: { index: false, follow: false },
 };
