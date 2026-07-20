@@ -52,12 +52,12 @@ export default function Privacidade() {
             <li>Endereço IP;</li>
             <li>Localização aproximada (cidade, estado e país), derivada do IP;</li>
             <li>Identificador técnico do dispositivo (fingerprint) e do navegador (User-Agent);</li>
-            <li>Um cookie de sessão anônimo, para evitar respostas duplicadas;</li>
+            <li>Um cookie de sessão anônimo, para evitar votos duplicados;</li>
             <li>Data e hora do acesso.</li>
           </ul>
           <p className="mt-2 font-semibold text-on-surface">Suas respostas:</p>
           <ul className="list-disc space-y-1 pl-5">
-            <li>Suas respostas e os temas selecionados — registrados de forma anônima.</li>
+            <li>Seus votos e os temas selecionados — registrados de forma anônima.</li>
           </ul>
           <p className="mt-2 font-semibold text-on-surface">Fornecidos por você (opcional):</p>
           <ul className="list-disc space-y-1 pl-5">
@@ -68,7 +68,7 @@ export default function Privacidade() {
         <Secao titulo="3. Finalidade">
           <ul className="list-disc space-y-1 pl-5">
             <li>Apurar os resultados da pesquisa de forma estatística e agregada;</li>
-            <li>Garantir a integridade da pesquisa, evitando respostas duplicadas (prevenção a fraudes);</li>
+            <li>Garantir a integridade da pesquisa, evitando votos duplicados (prevenção a fraudes);</li>
             <li>Se você fornecer contato, enviar convites para novas pesquisas.</li>
           </ul>
         </Secao>

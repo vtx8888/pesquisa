@@ -16,10 +16,17 @@ export const votoSchema = z
       .string()
       .refine(naLista("faixa_etaria"), "Faixa etária inválida"),
     genero: z.string().refine(naLista("genero"), "Gênero inválido"),
+    senador_vaga_1: z
+      .string()
+      .refine(naLista("senador_vaga_1"), "Senador inválido"),
+    senador_vaga_2: z
+      .string()
+      .refine(naLista("senador_vaga_2"), "Senador inválido"),
+    governador: z.string().refine(naLista("governador"), "Candidato inválido"),
     presidente: z.string().refine(naLista("presidente"), "Candidato inválido"),
     temas_melhorar: z
       .array(z.string())
-      .min(1, "Escolha ao menos um tema")
+      .default([])
       .refine(
         (arr) => arr.every((t) => VALIDOS["temas_melhorar"]?.has(t)),
         "Tema inválido"
@@ -29,7 +36,14 @@ export const votoSchema = z
     // feita na Server Action via siteverify — nao aqui no schema.
     turnstileToken: z.string().optional().default(""),
     thumbmark_id: z.string().optional().default(""),
-  });
+  })
+  // Nao permite os dois votos de senador iguais (exceto Branco/Nulo, Indeciso).
+  .refine(
+    (v) =>
+      v.senador_vaga_1 !== v.senador_vaga_2 ||
+      ["branco_nulo", "indeciso"].includes(v.senador_vaga_1),
+    { message: "Os dois votos de senador não podem ser iguais", path: ["senador_vaga_2"] }
+  );
 
 export type VotoInput = z.infer<typeof votoSchema>;
 

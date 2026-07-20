@@ -16,6 +16,9 @@ export type Candidato = {
 export type FieldKey =
   | "faixa_etaria"
   | "genero"
+  | "senador_vaga_1"
+  | "senador_vaga_2"
+  | "governador"
   | "presidente"
   | "temas_melhorar";
 
@@ -24,6 +27,9 @@ export type Step = {
   titulo: string;
   subtitulo?: string;
   candidatos: Candidato[];
+  // Esconde o candidato ja escolhido neste outro campo (ex.: senador vaga 2
+  // nao pode repetir o nome da vaga 1).
+  excluiEscolhaDe?: FieldKey;
   // Multipla escolha (marca varios).
   multi?: boolean;
   // Nao mostra avatar (ex.: temas, nao candidatos).
@@ -31,6 +37,19 @@ export type Step = {
   // Rotulo do "chip" no topo da pergunta (padrao "Cargo").
   rotulo?: string;
 };
+
+// Lista de senadores reaproveitada nas duas vagas (2 telas).
+const SENADORES: Candidato[] = [
+  { id: "alexandre_guimaraes", nome: "Alexandre Guimarães" },
+  { id: "carlos_gaguim", nome: "Carlos Gaguim" },
+  { id: "paulo_mourao", nome: "Paulo Mourão" },
+  { id: "eduardo_gomes", nome: "Eduardo Gomes" },
+  { id: "iraja_abreu", nome: "Irajá Abreu" },
+  { id: "eli_borges", nome: "Eli Borges" },
+  { id: "ronaldo_dimas", nome: "Ronaldo Dimas" },
+  { id: "branco_nulo", nome: "Branco / Nulo" },
+  { id: "indeciso", nome: "Não sei / Indeciso" },
+];
 
 export const STEPS: Step[] = [
   // Perguntas demograficas primeiro (toque unico, baixo atrito) para reduzir churn.
@@ -63,7 +82,43 @@ export const STEPS: Step[] = [
       { id: "nao_informado", nome: "Prefiro não informar" },
     ],
   },
-  // Foco da pesquisa: temas prioritarios e voto para Presidente.
+  {
+    field: "governador",
+    titulo: "Governador",
+    subtitulo: "Em quem você votaria para Governador?",
+    candidatos: [
+      { id: "professora_dorinha", nome: "Professora Dorinha" },
+      { id: "laurez_moreira", nome: "Laurez Moreira" },
+      { id: "vicentinho_jr", nome: "Vicentinho Jr" },
+      { id: "ataides_oliveira", nome: "Ataídes Oliveira" },
+      { id: "branco_nulo", nome: "Branco / Nulo" },
+      { id: "indeciso", nome: "Não sei / Indeciso" },
+    ],
+  },
+  {
+    field: "senador_vaga_1",
+    titulo: "Senador — primeiro voto",
+    subtitulo: "Em quem você votaria para o Senado? (primeiro voto)",
+    candidatos: SENADORES,
+  },
+  {
+    field: "senador_vaga_2",
+    titulo: "Senador — segundo voto",
+    subtitulo: "Em quem você votaria para o Senado? (segundo voto)",
+    candidatos: SENADORES,
+    excluiEscolhaDe: "senador_vaga_1",
+  },
+  {
+    field: "presidente",
+    titulo: "Presidente",
+    subtitulo: "Em quem você votaria para Presidente?",
+    candidatos: [
+      { id: "lula", nome: "Lula" },
+      { id: "flavio_bolsonaro", nome: "Flávio Bolsonaro" },
+      { id: "branco_nulo", nome: "Branco / Nulo" },
+      { id: "indeciso", nome: "Não sei / Indeciso" },
+    ],
+  },
   {
     field: "temas_melhorar",
     titulo: "Temas prioritários",
@@ -81,17 +136,6 @@ export const STEPS: Step[] = [
       { id: "emprego_renda", nome: "Geração de emprego e renda" },
       { id: "programas_sociais", nome: "Programas sociais" },
       { id: "transparencia_estatal", nome: "Transparência estatal" },
-    ],
-  },
-  {
-    field: "presidente",
-    titulo: "Presidente",
-    subtitulo: "Em quem você votaria para Presidente?",
-    candidatos: [
-      { id: "lula", nome: "Lula" },
-      { id: "flavio_bolsonaro", nome: "Flávio Bolsonaro" },
-      { id: "branco_nulo", nome: "Branco / Nulo" },
-      { id: "indeciso", nome: "Não sei / Indeciso" },
     ],
   },
 ];
